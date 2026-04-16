@@ -43,10 +43,11 @@
     if (!els.length) return;
 
     els.forEach(function (el) {
-      var dir   = el.getAttribute('data-entrance') || 'bottom';
-      var delay = parseFloat(el.getAttribute('data-entrance-delay') || 0);
-      var start = el.getAttribute('data-entrance-start') || START;
-      var from  = getFrom(dir);
+      var dir     = el.getAttribute('data-entrance') || 'bottom';
+      var delay   = parseFloat(el.getAttribute('data-entrance-delay') || 0);
+      var trigger = el.getAttribute('data-entrance-trigger') || 'scroll';
+      var start   = el.getAttribute('data-entrance-start') || START;
+      var from    = getFrom(dir);
 
       gsap.set(el, {
         x:       from.x,
@@ -56,28 +57,45 @@
       });
       el.style.willChange = 'transform, opacity';
 
-      ScrollTrigger.create({
-        trigger:             el,
-        start:               start,
-        once:                true,
-        invalidateOnRefresh: true,
-        onEnter: function () {
-          gsap.to(el, {
-            x:        0,
-            y:        0,
-            opacity:  1,
-            duration: DURATION,
-            delay:    delay,
-            ease:     EASE,
-            force3D:  true,
-            overwrite: 'auto',
-            onComplete: function () {
-              el.style.willChange = 'auto';
-              gsap.set(el, { clearProps: 'x,y,force3D' });
-            },
-          });
-        },
-      });
+      if (trigger === 'load') {
+        gsap.to(el, {
+          x:        0,
+          y:        0,
+          opacity:  1,
+          duration: DURATION,
+          delay:    delay,
+          ease:     EASE,
+          force3D:  true,
+          overwrite: 'auto',
+          onComplete: function () {
+            el.style.willChange = 'auto';
+            gsap.set(el, { clearProps: 'x,y,force3D' });
+          },
+        });
+      } else {
+        ScrollTrigger.create({
+          trigger:             el,
+          start:               start,
+          once:                true,
+          invalidateOnRefresh: true,
+          onEnter: function () {
+            gsap.to(el, {
+              x:        0,
+              y:        0,
+              opacity:  1,
+              duration: DURATION,
+              delay:    delay,
+              ease:     EASE,
+              force3D:  true,
+              overwrite: 'auto',
+              onComplete: function () {
+                el.style.willChange = 'auto';
+                gsap.set(el, { clearProps: 'x,y,force3D' });
+              },
+            });
+          },
+        });
+      }
     });
   }
 
