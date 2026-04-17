@@ -195,29 +195,7 @@
       },
     });
 
-    /* Pin oluştuktan sonra diğer ScrollTrigger'ları yeniden hesapla.
-       Double rAF: layout tamamen oturduğunda çalışır, setTimeout gereksiz. */
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        ScrollTrigger.refresh();
-      });
-    });
   }
 
-  function waitAndInit() {
-    if (window.__lenis) {
-      init();
-    } else {
-      var attempts = 0;
-      var timer = setInterval(function () {
-        attempts++;
-        if (window.__lenis || attempts >= 20) {
-          clearInterval(timer);
-          init();
-        }
-      }, 100);
-    }
-  }
-
-  window.addEventListener('load', waitAndInit);
+  window.addEventListener('load', init);
 })();
