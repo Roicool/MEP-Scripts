@@ -58,7 +58,7 @@
 
     gsap.fromTo(
       track,
-      { x: function () { return track.scrollWidth / 2 - window.innerWidth / 2; } },
+      { x: function () { return items[0] ? -items[0].offsetWidth / 2 : 0; } },
       {
         x: function () { return -(track.scrollWidth / 2 - window.innerWidth / 2); },
         ease: 'none',
