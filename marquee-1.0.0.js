@@ -60,7 +60,7 @@
       track,
       { x: function () { return window.innerWidth; } },
       {
-        x: function () { return window.innerWidth - track.scrollWidth; },
+        x: function () { return -(track.scrollWidth / 2 - window.innerWidth / 2); },
         ease: 'none',
         scrollTrigger: {
           trigger:             section,
