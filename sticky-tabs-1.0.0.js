@@ -34,7 +34,6 @@
 
   var DUR_SLIDE = 0.7;   /* resim + içerik geçiş süresi */
   var EASE_OUT  = 'power3.inOut';
-  var PIN_PAD   = 1;     /* her sekme için kaç vh scroll (toplam: n * PIN_PAD * vh) */
 
   function init() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
@@ -173,8 +172,7 @@
     ScrollTrigger.create({
       trigger:             section,
       start:               'top top',
-      end:                 '+=' + (window.innerHeight * n * PIN_PAD),
-      pin:                 true,
+      end:                 'bottom bottom',
       invalidateOnRefresh: true,
       onUpdate: function (self) {
         var p    = self.progress;               /* 0 → 1 */
