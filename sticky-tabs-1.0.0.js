@@ -194,6 +194,14 @@
         }
       },
     });
+
+    /* Pin oluştuktan sonra diğer ScrollTrigger'ları yeniden hesapla.
+       Double rAF: layout tamamen oturduğunda çalışır, setTimeout gereksiz. */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        ScrollTrigger.refresh();
+      });
+    });
   }
 
   function waitAndInit() {
