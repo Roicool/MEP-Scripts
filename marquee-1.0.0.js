@@ -56,11 +56,14 @@
       });
     }
 
+    /* offset: tüm animasyonu sola kaydırır — merkezde ilk resim yarıdan kesilir */
+    function offset() { return items[0] ? items[0].offsetWidth / 2 : 0; }
+
     gsap.fromTo(
       track,
-      { x: function () { return items[0] ? -items[0].offsetWidth / 2 : 0; } },
+      { x: function () { return  (track.scrollWidth / 2 - window.innerWidth / 2) - offset(); } },
       {
-        x: function () { return -(track.scrollWidth / 2 - window.innerWidth / 2); },
+        x: function () { return -(track.scrollWidth / 2 - window.innerWidth / 2) - offset(); },
         ease: 'none',
         scrollTrigger: {
           trigger:             section,
