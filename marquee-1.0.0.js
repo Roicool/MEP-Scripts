@@ -58,9 +58,9 @@
 
     gsap.fromTo(
       track,
-      { x: function () { return track.scrollWidth / 2 - window.innerWidth / 2; } },
+      { x: function () { return window.innerWidth; } },
       {
-        x: function () { return -(track.scrollWidth / 2 - window.innerWidth / 2); },
+        x: function () { return window.innerWidth - track.scrollWidth; },
         ease: 'none',
         scrollTrigger: {
           trigger:             section,
