@@ -62,14 +62,14 @@
     gsap.set(fills, { scaleX: 0, transformOrigin: 'left center' });
 
     gsap.set(slides,   { clipPath: 'inset(100% 0% 0% 0%)', y: 30, force3D: true });
-    gsap.set(contents, { clipPath: 'inset(100% 0% 0% 0%)', y: 20, force3D: true });
+    gsap.set(contents, { autoAlpha: 0, y: 20, force3D: true });
 
     if (slides[0]) {
       gsap.set(slides[0],   { clipPath: 'inset(0% 0% 0% 0%)', y: 0 });
       slides[0].classList.add('is-active');
     }
     if (contents[0]) {
-      gsap.set(contents[0], { clipPath: 'inset(0% 0% 0% 0%)', y: 0 });
+      gsap.set(contents[0], { autoAlpha: 1, y: 0 });
       contents[0].classList.add('is-active');
     }
     if (items[0]) items[0].classList.add('is-active');
@@ -134,29 +134,31 @@
       var nextCnt = contents[index];
 
       if (prevCnt) {
-        prevCnt.style.willChange = 'clip-path, transform';
+        prevCnt.style.willChange = 'opacity, transform';
         gsap.to(prevCnt, {
-          clipPath: 'inset(100% 0% 0% 0%)',
-          y:        -20,
-          duration: DUR_SLIDE * 0.75,
-          ease:     EASE_OUT,
-          force3D:  true,
+          autoAlpha: 0,
+          y:         -20,
+          duration:  DUR_SLIDE * 0.6,
+          ease:      'power2.in',
+          force3D:   true,
           overwrite: 'auto',
           onComplete: function () {
             prevCnt.classList.remove('is-active');
             prevCnt.style.willChange = 'auto';
+            gsap.set(prevCnt, { y: 20 });
           },
         });
       }
 
       if (nextCnt) {
-        nextCnt.style.willChange = 'clip-path, transform';
+        nextCnt.style.willChange = 'opacity, transform';
         gsap.fromTo(nextCnt,
-          { clipPath: 'inset(100% 0% 0% 0%)', y: 20 },
+          { autoAlpha: 0, y: 20 },
           {
-            clipPath:  'inset(0% 0% 0% 0%)',
+            autoAlpha: 1,
             y:         0,
             duration:  DUR_SLIDE,
+            delay:     DUR_SLIDE * 0.2,
             ease:      EASE_OUT,
             force3D:   true,
             overwrite: 'auto',
