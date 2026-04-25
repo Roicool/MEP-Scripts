@@ -1,5 +1,5 @@
 /**
- * SplitCards 1.0.0 — viewport'a girerken A ve C slide-in, B settle.
+ * SplitCards 1.0.2 — viewport'a girerken A ve C slide-in, B settle.
  * Pin yok. Bir kez çalışır, kendini yok eder.
  * translate3d (GPU) + eş zamanlı width açılımı.
  * Lenis + ScrollTrigger uyumlu. GSAP gerektirir.
@@ -35,11 +35,14 @@
     gsap.set(slotC, { width: 0, x:  SLIDE_X, opacity: 0, force3D: true });
     gsap.set(slotB, { scale: B_SCALE,                    force3D: true });
 
+    /* VEX gibi pin'li section'ların spacer'larını hesaba katmak için
+     * trigger oluşturulmadan önce tüm pozisyonları senkron yenile */
+    ScrollTrigger.refresh();
+
     ScrollTrigger.create({
-      trigger:             section,
-      start:               'top 72%',
-      once:                true,           /* bir kez çalışır, ScrollTrigger kendini yok eder */
-      invalidateOnRefresh: true,           /* pin spacer sonrası pozisyonu yeniden hesaplar */
+      trigger: section,
+      start:   'top 72%',
+      once:    true,
       onEnter: function () {
         var tl = gsap.timeline({
           defaults: { ease: 'power3.out', duration: DURATION, force3D: true },
