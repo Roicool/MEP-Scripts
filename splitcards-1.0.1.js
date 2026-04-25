@@ -36,9 +36,10 @@
     gsap.set(slotB, { scale: B_SCALE,                    force3D: true });
 
     ScrollTrigger.create({
-      trigger: section,
-      start:   'top 72%',
-      once:    true,           /* bir kez çalışır, ScrollTrigger kendini yok eder */
+      trigger:             section,
+      start:               'top 72%',
+      once:                true,           /* bir kez çalışır, ScrollTrigger kendini yok eder */
+      invalidateOnRefresh: true,           /* pin spacer sonrası pozisyonu yeniden hesaplar */
       onEnter: function () {
         var tl = gsap.timeline({
           defaults: { ease: 'power3.out', duration: DURATION, force3D: true },
