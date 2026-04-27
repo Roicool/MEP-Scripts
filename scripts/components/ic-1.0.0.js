@@ -72,11 +72,13 @@
 
       card.classList.toggle('is-active', isTarget);
 
-      gsap.to(card,    { [activeProp]: isTarget ? activeSize : inactiveSize, duration: 0.65, ease: 'power3.inOut' });
-      gsap.to(overlay, { opacity: isTarget ? 0 : 1, duration: 0.5, ease: 'power2.out' });
+      gsap.killTweensOf([card, cat, bottom, overlay, name]);
+
+      gsap.to(card,    { [activeProp]: isTarget ? activeSize : inactiveSize, duration: 0.65, ease: 'power3.inOut', overwrite: true });
+      gsap.to(overlay, { opacity: isTarget ? 0 : 1, duration: 0.5, ease: 'power2.out', overwrite: true });
 
       if (isTarget) {
-        gsap.to(name, { opacity: 0, duration: 0.2, ease: 'power2.out' });
+        gsap.to(name, { opacity: 0, duration: 0.2, ease: 'power2.out', overwrite: true });
         setCenterCat(cat);
         gsap.set(cat, { opacity: 1 });
 
@@ -90,16 +92,19 @@
           transformOrigin: 'left top',
           duration: 0.65,
           ease: 'power3.inOut',
+          overwrite: true,
         });
-        gsap.fromTo(bottom, { y: '200%' }, { y: 0, duration: 0.65, delay: 0.2, ease: 'power3.out' });
+        gsap.fromTo(bottom, { y: '200%' }, { y: 0, duration: 0.65, delay: 0.2, ease: 'power3.out', overwrite: true });
       } else {
-        gsap.to(name, { opacity: 1, duration: 0.3, delay: 0.15, ease: 'power2.out' });
+        gsap.set(bottom, { y: '200%' });
+        gsap.to(name, { opacity: 1, duration: 0.3, delay: 0.15, ease: 'power2.out', overwrite: true });
         gsap.to(cat, {
           scale: 0.5, x: 0, y: 0, opacity: 0,
           duration: 0.35, ease: 'power3.inOut',
+          overwrite: true,
           onComplete: function () { setCenterCat(cat); },
         });
-        gsap.to(bottom, { y: '200%', duration: 0.35, ease: 'power3.in' });
+        gsap.to(bottom, { y: '200%', duration: 0.35, ease: 'power3.in', overwrite: true });
       }
     });
   }
