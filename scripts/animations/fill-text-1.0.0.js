@@ -2,7 +2,7 @@
  * FillText 1.0.0 — SplitText scroll fill animasyonu (.fill-text) (homepage footer).
  */
 (function () {
-  window.addEventListener('load', function () {
+  function run() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || typeof SplitText === 'undefined') {
       console.warn('FillText: GSAP, ScrollTrigger veya SplitText bulunamadı.');
       return;
@@ -34,5 +34,11 @@
         });
       });
     });
-  });
+  }
+
+  if (document.readyState === 'complete') {
+    run();
+  } else {
+    window.addEventListener('load', run);
+  }
 })();

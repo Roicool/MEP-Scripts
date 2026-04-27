@@ -3,7 +3,7 @@
  * Lenis uyumlu. Geri dönerken reverse eder.
  */
 (function () {
-  window.addEventListener('load', function () {
+  function run() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
       console.warn('ImgReveal: GSAP veya ScrollTrigger bulunamadı.');
       return;
@@ -34,5 +34,11 @@
     });
 
     ScrollTrigger.refresh();
-  });
+  }
+
+  if (document.readyState === 'complete') {
+    run();
+  } else {
+    window.addEventListener('load', run);
+  }
 })();

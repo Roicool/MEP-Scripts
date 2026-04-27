@@ -92,5 +92,9 @@
     }
   }
 
-  window.addEventListener('load', waitAndInit);
+  if (document.readyState === 'complete') {
+    waitAndInit();
+  } else {
+    window.addEventListener('load', waitAndInit);
+  }
 })();
