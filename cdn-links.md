@@ -59,6 +59,7 @@ Base: `https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/`
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/sliders/featureslider-3.4.5.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/sliders/mobcardswiper-1.1.2.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/sliders/marquee-1.0.0.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/sliders/ccswiper-1.0.0.js"></script>
 ```
 
 ---
@@ -75,4 +76,5 @@ Base: `https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/`
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/extras/vanilla-tilt-1.0.0.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/extras/page-transition-barba-1.0.0.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/extras/page-transition-overlay-1.0.0.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/extras/blog-utils-1.0.0.js"></script>
 ```
