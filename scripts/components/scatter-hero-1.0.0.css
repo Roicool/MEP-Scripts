@@ -1,0 +1,212 @@
+/* ================================================================
+   scatter-hero-1.0.0.css
+   JS hedefleri: .section-sh  .sh__scene  .sh__images  .sh__copy
+                 .sh__copy-inner  .sh__img-wrap  .sh__img-inner
+                 .sh__img-inner picture  .sh__base
+   BP_DESKTOP = 1024px
+   ================================================================ */
+
+/* ─── Section ───────────────────────────────────────────────────── */
+.section-sh {
+  position: relative;
+  width: 100%;
+}
+
+/* Negatif margin: sonraki section üste kayarak gelir (pin bitiminden sonra) */
+@media (min-width: 1024px) {
+  .section-sh[data-loaded="true"] {
+    margin-bottom: calc(-125vh + 500px);
+    margin-top: 0;
+  }
+}
+
+/* Portrait tablet'te daha az overlap gerekiyor */
+@media (max-aspect-ratio: 1/1) and (min-width: 1024px) and (max-width: 1291px) {
+  .section-sh[data-loaded="true"] {
+    margin-bottom: calc(-125vh + 800px);
+  }
+}
+
+/* ─── Scene (pin hedefi) ────────────────────────────────────────── */
+/* Mobile'da aspect-ratio bazlı yükseklik, desktop'ta 100vh */
+.sh__scene {
+  position: relative;
+  width: 100%;
+  height: calc(100vw / 0.5166);
+}
+
+@media (min-width: 374px) {
+  .sh__scene { height: calc(100vw / 0.5156); }
+}
+@media (min-width: 480px) {
+  .sh__scene { height: calc(100vw / 0.6139); }
+}
+@media (min-width: 718px) {
+  .sh__scene { height: calc(100vw / 0.7281); }
+}
+@media (min-width: 1024px) {
+  .sh__scene {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+/* ─── Copy ──────────────────────────────────────────────────────── */
+/* JS: gsap.set(copyInner, { transformPerspective: 1000 })
+       zoom-out → opacity: 0, z: -100 */
+.sh__copy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, calc(-50% - 56px), 0);
+  z-index: 2;
+  text-align: center;
+  width: 700px;
+  max-width: 90vw;
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .sh__copy { z-index: 0; }
+}
+
+/* JS animasyon hedefi — transform-origin gerekiyor */
+.sh__copy-inner {
+  transform-origin: center center;
+}
+
+/* Mobile: JS dokunmaz, !important ile JS override'ını önle */
+@media (max-width: 1023px) {
+  .sh__copy-inner {
+    transform: translate3d(0, 0, 0) !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ─── Images container ──────────────────────────────────────────── */
+/* JS: gsap.set → xPercent: -50, yPercent: -50, transformPerspective: 1000
+       zoom-out → z: -700 */
+.sh__images {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+/* data-loaded öncesi gizli — FOUC önler */
+@media (min-width: 1024px) {
+  .sh__images { opacity: 0; }
+  .section-sh[data-loaded="true"] .sh__images { opacity: 1; }
+}
+
+/* ─── Her resim bloğu ───────────────────────────────────────────── */
+/* JS rise hedefi: .sh__img-inner → y: -(vh * 1.25)
+                   picture        → yPercent: -100 */
+.sh__img-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .sh__img-wrap { display: block; }
+}
+
+/* overflow:hidden YOK — rise sırasında ekran dışına uçabilmeli */
+.sh__img-inner {
+  width: 100%;
+  border-radius: 12px;
+  transform-origin: 0% 0%;
+  transform-style: preserve-3d;
+}
+
+.sh__img-inner picture,
+.sh__img-inner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: 0% 0%;
+  transform-style: preserve-3d;
+  border-radius: 12px;
+}
+
+/* ─── Resim pozisyonları: 1024px ────────────────────────────────── */
+@media (min-width: 1024px) {
+  .sh__img-1-1 { transform: translate3d(-880px, -560px, 0); width: 260px; }
+  .sh__img-5-1 { transform: translate3d( 480px, -600px, 0); width: 360px; }
+  .sh__img-1-2 { transform: translate3d(-880px,  -25%,  0); width: 220px; }
+  .sh__img-5-2 { transform: translate3d( 660px,  -60px, 0); width: 280px; }
+  .sh__img-1-3 { transform: translate3d(-780px,  320px, 0); width: 260px; }
+  .sh__img-5-3 { transform: translate3d( 480px,  420px, 0); width: 300px; }
+  .sh__img-3-1 { transform: translate3d( -80px, -480px, 0); width: 200px; }
+  .sh__img-2-1 { transform: translate3d(-560px, -400px, 0); width: 240px; }
+  .sh__img-4-1 { transform: translate3d( 340px, -240px, 0); width: 240px; }
+  .sh__img-2-2 { transform: translate3d(-120%,   100px, 0); width: 340px; }
+  .sh__img-3-2 { transform: translate3d( 160px,  160px, 0); width: 240px; }
+}
+
+/* ─── Resim pozisyonları: 1292px ────────────────────────────────── */
+@media (min-width: 1292px) {
+  .sh__img-1-1 { transform: translate3d(-1160px, -700px, 0); width: 360px; }
+  .sh__img-5-1 { transform: translate3d(  560px, -740px, 0); width: 400px; }
+  .sh__img-1-2 { transform: translate3d(-1100px,  -25%,  0); width: 300px; }
+  .sh__img-5-2 { transform: translate3d(  820px,    0px, 0); width: 300px; }
+  .sh__img-1-3 { transform: translate3d(-1040px,  520px, 0); width: 360px; }
+  .sh__img-5-3 { transform: translate3d(  550px,  560px, 0); width: 420px; }
+  .sh__img-3-1 { transform: translate3d(  -60px, -640px, 0); width: 280px; }
+  .sh__img-2-1 { transform: translate3d( -740px, -580px, 0); width: 360px; }
+  .sh__img-4-1 { transform: translate3d(  400px, -300px, 0); width: 360px; }
+  .sh__img-2-2 { transform: translate3d( -120%,   140px, 0); width: 460px; }
+  .sh__img-3-2 { transform: translate3d(  120px,  260px, 0); width: 280px; }
+}
+
+/* ─── Resim pozisyonları: 1441px ────────────────────────────────── */
+@media (min-width: 1441px) {
+  .sh__img-1-1 { transform: translate3d(-1280px, -720px, 0); width: 360px; }
+  .sh__img-5-1 { transform: translate3d(  760px, -840px, 0); width: 480px; }
+  .sh__img-1-2 { transform: translate3d(-1260px,  -25%,  0); width: 320px; }
+  .sh__img-5-2 { transform: translate3d(  930px,  -60px, 0); width: 360px; }
+  .sh__img-1-3 { transform: translate3d(-1120px,  520px, 0); width: 440px; }
+  .sh__img-5-3 { transform: translate3d(  680px,  600px, 0); width: 500px; }
+  .sh__img-3-1 { transform: translate3d(  -80px, -720px, 0); width: 360px; }
+  .sh__img-2-1 { transform: translate3d( -860px, -600px, 0); width: 420px; }
+  .sh__img-4-1 { transform: translate3d(  440px, -420px, 0); width: 420px; }
+  .sh__img-2-2 { transform: translate3d( -100%,   160px, 0); width: 520px; }
+  .sh__img-3-2 { transform: translate3d(  160px,  240px, 0); width: 360px; }
+}
+
+/* ─── Portrait tablet: 1024–1291px, dikey ekran ────────────────── */
+@media (max-aspect-ratio: 1/1) and (min-width: 1024px) and (max-width: 1291px) {
+  .sh__img-1-1 { transform: translate3d( -700px,-1080px, 0); width: 460px; }
+  .sh__img-5-1 { transform: translate3d(  380px,-1000px, 0); width: 400px; }
+  .sh__img-1-2 { transform: translate3d( -900px,   -25%, 0); width: 220px; }
+  .sh__img-5-2 { transform: translate3d(  560px,   -60px,0); width: 220px; }
+  .sh__img-1-3 { transform: translate3d( -320px,  820px, 0); width: 200px; }
+  .sh__img-5-3 { transform: translate3d(  360px,  820px, 0); width: 400px; }
+  .sh__img-3-1 { transform: translate3d(  -80px, -740px, 0); width: 200px; }
+  .sh__img-2-1 { transform: translate3d( -560px, -580px, 0); width: 280px; }
+  .sh__img-4-1 { transform: translate3d(  240px, -640px, 0); width: 340px; }
+  .sh__img-2-2 { transform: translate3d( -105%,   160px, 0); width: 440px; }
+  .sh__img-3-2 { transform: translate3d(  120px,  280px, 0); width: 320px; }
+}
+
+/* ─── Mobile base image ─────────────────────────────────────────── */
+/* Sadece mobile'da görünür, desktop'ta JS bu elementi saklar */
+.sh__base {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sh__base img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+@media (min-width: 1024px) {
+  .sh__base { display: none; }
+}
