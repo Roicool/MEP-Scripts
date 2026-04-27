@@ -49,13 +49,25 @@
     /* bar layer'ını baştan aç — 3 fazlı transform arası repaint önler */
     gsap.set(bar, { willChange: 'transform' });
 
-    /* ---------- bar delta hesaplama ---------- */
+    /* ---------- bar delta hesaplama ----------
+     * offsetLeft/offsetTop layout-based, transform'lardan bağımsız.
+     * getBoundingClientRect transform dahil hesapladığı için refresh anında
+     * bar'ın kalan GSAP transform'u varsa delta yanlış çıkıyordu.
+     */
+    function getOffsetLeft(el) {
+      var x = 0;
+      while (el && el.offsetParent) { x += el.offsetLeft; el = el.offsetParent; }
+      return x;
+    }
+    function getOffsetTop(el) {
+      var y = 0;
+      while (el && el.offsetParent) { y += el.offsetTop; el = el.offsetParent; }
+      return y;
+    }
     function getBarDelta() {
-      var barRect    = bar.getBoundingClientRect();
-      var anchorRect = barAnchor.getBoundingClientRect();
       return {
-        x: anchorRect.left - barRect.left,
-        y: anchorRect.top  - barRect.top,
+        x: getOffsetLeft(barAnchor) - getOffsetLeft(bar),
+        y: getOffsetTop(barAnchor)  - getOffsetTop(bar),
       };
     }
 
