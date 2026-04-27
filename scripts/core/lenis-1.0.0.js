@@ -16,7 +16,7 @@
     gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
     window.__lenis = lenis;
-    ScrollTrigger.refresh();
+    setTimeout(function () { ScrollTrigger.refresh(); }, 500);
   }
 
   if (document.readyState === 'complete') {
