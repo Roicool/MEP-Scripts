@@ -99,13 +99,17 @@
       scrollTrigger: {
         trigger:             section,
         start:               'top top',
-        end:                 '+=' + (window.innerHeight * PIN_LENGTH),
+        end:                 function () { return '+=' + (window.innerHeight * PIN_LENGTH); },
         scrub:               SCRUB,
         pin:                 stage,
         pinSpacing:          true,
         anticipatePin:       1,
         invalidateOnRefresh: true,
-        onRefresh: updateDelta,
+        onRefresh: function () {
+          updateDelta();
+          s2Right.style.pointerEvents = '';
+          caseEl.style.pointerEvents  = '';
+        },
         onUpdate: onScrollUpdate,
       },
     });
