@@ -66,8 +66,7 @@
 
       /* EXIT — üstten çıkarken küçülür + solar */
       if (doExit) {
-        gsap.fromTo(section,
-          { scale: 1, opacity: 1 },
+        gsap.to(section,
           {
             scale:   1 - amount * 0.6,
             opacity: 0.5,
