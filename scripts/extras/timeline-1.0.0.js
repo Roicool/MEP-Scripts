@@ -35,7 +35,7 @@
     var setWidth = 0;
     var slideW = 0;
     var center = 0;
-    var PEEK_RATIO = parseFloat(wrap.getAttribute('data-peek')) || 1.2;
+    var PEEK_RATIO = parseFloat(wrap.getAttribute('data-peek')) || 0;
 
     function measure() {
       var total = 0;
