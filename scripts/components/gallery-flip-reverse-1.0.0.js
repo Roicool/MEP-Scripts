@@ -12,8 +12,6 @@
     gsap.registerPlugin(Flip);
 
     var flipCtx;
-    var overlayEl = document.querySelector('#overlay');
-
     function createTween() {
       var g = document.querySelector('#gallery-8');
       if (!g) return;
@@ -23,14 +21,10 @@
       flipCtx = gsap.context(function () {
         var items = g.querySelectorAll('.gallery__item');
 
-        /* Final (kompakt) pozisyonları yakala */
         g.classList.add('gallery--final');
         var finalState = Flip.getState(items);
-
-        /* Initial (açık) pozisyona dön — burası scroll sonu */
         g.classList.remove('gallery--final');
 
-        /* Flip.from: final'dan başla → initial'a aç */
         var flip = Flip.from(finalState, {
           simple:   true,
           ease:     'expoScale(5, 1)',
@@ -70,25 +64,6 @@
     }
 
     createTween();
-
-    /* Overlay blur fade — context dışında, pinnedContainer ile */
-    if (overlayEl) {
-      var g2 = document.querySelector('#gallery-8');
-      if (g2) {
-        gsap.set(overlayEl, { opacity: 1 });
-        gsap.to(overlayEl, {
-          opacity: 0,
-          ease:    'power2.in',
-          scrollTrigger: {
-            trigger:          g2,
-            start:            'center center',
-            end:              'center center+=200',
-            scrub:            true,
-            pinnedContainer:  g2.parentNode,
-          },
-        });
-      }
-    }
 
     var t;
     window.addEventListener('resize', function () {
