@@ -40,10 +40,13 @@
     var overlay  = card.querySelector('.ic__overlay');
     var name     = card.querySelector('.ic__name');
 
+    var cta = card.querySelector('.ic__cta');
+
     gsap.set(card,    { [activeProp]: isActive ? activeSize : inactiveSize });
     gsap.set(overlay, { opacity: isActive ? 0 : 1 });
     gsap.set(bottom,  { y: isActive ? 0 : '200%' });
     gsap.set(name,    { opacity: isActive ? 0 : 1 });
+    if (cta) gsap.set(cta, { pointerEvents: isActive ? 'auto' : 'none' });
 
     if (isActive) {
       var cardH = card.offsetHeight;
@@ -69,6 +72,7 @@
       var bottom   = card.querySelector('.ic__bottom');
       var overlay  = card.querySelector('.ic__overlay');
       var name     = card.querySelector('.ic__name');
+      var cta      = card.querySelector('.ic__cta');
 
       card.classList.toggle('is-active', isTarget);
 
@@ -94,8 +98,11 @@
           ease: 'power3.inOut',
           overwrite: true,
         });
-        gsap.fromTo(bottom, { y: '200%' }, { y: 0, duration: 0.65, delay: 0.2, ease: 'power3.out', overwrite: true });
+        gsap.fromTo(bottom, { y: '200%' }, { y: 0, duration: 0.65, delay: 0.2, ease: 'power3.out', overwrite: true,
+          onComplete: function () { if (cta) gsap.set(cta, { pointerEvents: 'auto' }); },
+        });
       } else {
+        if (cta) gsap.set(cta, { pointerEvents: 'none' });
         gsap.set(bottom, { y: '200%' });
         gsap.to(name, { opacity: 1, duration: 0.3, delay: 0.15, ease: 'power2.out', overwrite: true });
         gsap.to(cat, {
