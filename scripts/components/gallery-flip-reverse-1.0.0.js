@@ -46,12 +46,17 @@
           },
         });
 
-        var fadeTargets = [];
-        if (content) fadeTargets.push(content);
-        if (overlay) fadeTargets.push(overlay);
+        if (overlay) {
+          tl.to(overlay, {
+            opacity:  0,
+            force3D:  true,
+            ease:     'power3.in',
+            duration: 0.1,
+          }, 0);
+        }
 
-        if (fadeTargets.length) {
-          tl.to(fadeTargets, {
+        if (content) {
+          tl.to(content, {
             opacity:  0,
             scale:    0.82,
             filter:   'blur(14px)',
