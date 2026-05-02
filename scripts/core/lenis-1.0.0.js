@@ -17,6 +17,8 @@
     gsap.ticker.lagSmoothing(0);
     window.__lenis = lenis;
     setTimeout(function () { ScrollTrigger.refresh(); }, 500);
+    setTimeout(function () { lenis.resize(); ScrollTrigger.refresh(); }, 1500);
+
   }
 
   if (document.readyState === 'complete') {
