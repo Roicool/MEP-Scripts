@@ -5,10 +5,7 @@
     var wrapper = document.querySelector('.w-pagination-wrapper');
     if (!wrapper) return;
 
-    var totalEl = wrapper.querySelector('.pagination-total-pages');
-    var totalPages = totalEl
-      ? parseInt(totalEl.textContent, 10)
-      : parseInt(wrapper.getAttribute('data-total-pages'), 10);
+    var totalPages = getTotalPages();
     if (!totalPages || totalPages < 2) return;
 
     var prevLink = wrapper.querySelector('.w-pagination-previous');
@@ -35,6 +32,14 @@
     } else {
       wrapper.appendChild(container);
     }
+  }
+
+  // w-page-count içeriği "4", "1 of 4", "1 / 4" gibi olabilir — son sayıyı alır
+  function getTotalPages() {
+    var el = document.querySelector('.w-page-count');
+    if (!el) return 0;
+    var nums = (el.textContent || '').match(/\d+/g);
+    return nums ? parseInt(nums[nums.length - 1], 10) : 0;
   }
 
   function getCurrentPage() {
