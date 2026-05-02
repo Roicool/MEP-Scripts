@@ -27,8 +27,6 @@
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-
     var sections = document.querySelectorAll('[data-scroll-color]');
     if (!sections.length) return;
 

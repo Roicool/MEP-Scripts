@@ -8,8 +8,6 @@
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-
     var block = document.querySelector('.stickygrid');
     if (!block) return;
 

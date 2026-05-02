@@ -20,8 +20,6 @@
 
     if (window.innerWidth < BP_DESKTOP) return;
 
-    gsap.registerPlugin(ScrollTrigger);
-
     var section   = document.querySelector('.section-hero');
     if (!section) return;
 

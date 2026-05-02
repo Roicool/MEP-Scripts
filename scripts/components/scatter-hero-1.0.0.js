@@ -10,8 +10,6 @@
     var scene = section.querySelector('.sh__scene');
     if (!scene) return;
 
-    gsap.registerPlugin(ScrollTrigger);
-
     var desktop = window.innerWidth >= BP_DESKTOP;
 
     if (!desktop) {

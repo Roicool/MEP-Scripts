@@ -37,8 +37,6 @@
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-
     var els = document.querySelectorAll('[data-entrance]');
     if (!els.length) return;
 

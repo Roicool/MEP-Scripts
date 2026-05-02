@@ -41,8 +41,6 @@
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-
     var section  = document.querySelector('.section-st');
     if (!section) return;
 

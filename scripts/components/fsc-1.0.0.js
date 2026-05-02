@@ -36,8 +36,6 @@
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-
     var section = document.querySelector('.section-fsc');
     if (!section) return;
 

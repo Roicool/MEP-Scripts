@@ -39,8 +39,6 @@
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-
     var sections = document.querySelectorAll('[data-parallax]');
     if (!sections.length) return;
 
@@ -81,8 +79,6 @@
         );
       }
     });
-
-    ScrollTrigger.refresh();
   }
 
   function waitAndInit() {

@@ -27,8 +27,6 @@
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-
     var sections = document.querySelectorAll('[data-scroll-scale]');
     if (!sections.length) return;
 
@@ -97,8 +95,6 @@
         }, enterDur + holdDur);
       }
     });
-
-    ScrollTrigger.refresh();
   }
 
   function waitAndInit() {

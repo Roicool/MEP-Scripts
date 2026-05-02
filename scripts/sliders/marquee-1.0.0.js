@@ -35,7 +35,6 @@
     }
 
     /* ── DESKTOP: scroll-linked yatay kayma ── */
-    gsap.registerPlugin(ScrollTrigger);
 
     /* updateActive: rAF ile throttle edilir, her scroll frame'de
        tüm item'lara getBoundingClientRect çağrısı azaltılır */

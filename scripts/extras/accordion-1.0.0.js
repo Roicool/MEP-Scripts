@@ -43,7 +43,6 @@
   /* ── İnit ────────────────────────────────────────────────────────────────── */
   function init() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
 
     var section = document.querySelector('.section-acs');
     if (!section) return;

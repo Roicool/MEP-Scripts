@@ -171,8 +171,6 @@
       console.warn('VEX: GSAP veya ScrollTrigger bulunamadı.');
       return;
     }
-    gsap.registerPlugin(ScrollTrigger);
-
     var section  = document.querySelector('.section-vex');
     if (!section) return;
 

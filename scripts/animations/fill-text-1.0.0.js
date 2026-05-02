@@ -7,7 +7,7 @@
       console.warn('FillText: GSAP, ScrollTrigger veya SplitText bulunamadı.');
       return;
     }
-    gsap.registerPlugin(ScrollTrigger, SplitText);
+    gsap.registerPlugin(SplitText);
     document.fonts.ready.then(function () {
       document.querySelectorAll('.fill-text').forEach(function (el) {
         var split = SplitText.create(el, { type: 'lines', autoSplit: true });

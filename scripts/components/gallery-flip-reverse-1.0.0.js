@@ -9,7 +9,7 @@
       console.warn('GalleryFlipReverse: GSAP, ScrollTrigger veya Flip bulunamadı.');
       return;
     }
-    gsap.registerPlugin(ScrollTrigger, Flip);
+    gsap.registerPlugin(Flip);
     var flipCtx;
     function createTween() {
       var g = document.querySelector('#gallery-8');

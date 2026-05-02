@@ -17,8 +17,6 @@
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-
     var section = document.querySelector('.section-split_cards');
     if (!section) return;
 

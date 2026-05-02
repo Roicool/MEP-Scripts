@@ -8,8 +8,6 @@
       console.warn('Navbar: GSAP veya ScrollTrigger bulunamadı.');
       return;
     }
-    gsap.registerPlugin(ScrollTrigger);
-
     var navEls = Array.from(document.querySelectorAll(
       '.navbar_s, .nav_logo_home, .nav-container_grid, [id="add-is-active"]'
     ));
