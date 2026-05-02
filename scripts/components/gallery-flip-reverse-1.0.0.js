@@ -36,6 +36,8 @@
         var content = g.querySelector('.gf__content');
         var overlay = document.querySelector('#overlay');
 
+        if (overlay) gsap.set(overlay, { opacity: 1 });
+
         var tl = gsap.timeline({
           scrollTrigger: {
             trigger: g,
@@ -43,13 +45,16 @@
             end:     '+=100%',
             scrub:   true,
             pin:     g.parentNode,
-            onUpdate: function (self) {
-              if (overlay) {
-                gsap.set(overlay, { opacity: Math.max(0, 1 - self.progress * 12) });
-              }
-            },
           },
         });
+
+        if (overlay) {
+          tl.to(overlay, {
+            opacity:  0,
+            ease:     'power2.in',
+            duration: 0.25,
+          }, 0);
+        }
 
         if (content) {
           tl.to(content, {
@@ -58,7 +63,7 @@
             filter:   'blur(14px)',
             force3D:  true,
             ease:     'power3.in',
-            duration: 0.1,
+            duration: 0.25,
           }, 0);
         }
 
