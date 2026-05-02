@@ -43,21 +43,13 @@
             end:     '+=100%',
             scrub:   true,
             pin:     g.parentNode,
+            onUpdate: function (self) {
+              if (overlay) {
+                gsap.set(overlay, { opacity: Math.max(0, 1 - self.progress * 12) });
+              }
+            },
           },
         });
-
-        if (overlay) {
-          gsap.to(overlay, {
-            opacity: 0,
-            ease:    'power2.in',
-            scrollTrigger: {
-              trigger: g,
-              start:   'center center',
-              end:     'center center+=120',
-              scrub:   true,
-            },
-          });
-        }
 
         if (content) {
           tl.to(content, {
