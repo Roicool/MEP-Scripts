@@ -1,6 +1,6 @@
 # Animasyon Scriptleri — Kullanım Kılavuzu
 
-Bu kılavuz 4 animation scriptinin nasıl çalıştığını, hangi data-attribute'ları kullandığını ve Webflow'da nasıl kurgulandığını açıklar.
+Bu kılavuz animation scriptlerinin nasıl çalıştığını, hangi data-attribute'ları kullandığını ve Webflow'da nasıl kurgulandığını açıklar.
 
 ---
 
@@ -10,6 +10,7 @@ Bu kılavuz 4 animation scriptinin nasıl çalıştığını, hangi data-attribu
 2. [ScrollScale](#2-scrollscale-100)
 3. [FillText](#3-filltext-100)
 4. [ImgReveal](#4-imgreveal-100)
+5. [Entrance](#5-entrance-100)
 
 ---
 
@@ -209,6 +210,69 @@ Her element kendi bağımsız ScrollTrigger'ına sahiptir — aynı anda birden 
 
 ---
 
+## 5. Entrance `1.0.0`
+
+**Ne yapar:** Element belirli bir yönden (alt/üst/sağ/sol) kayarak ve fade-in olarak görünür hale gelir. Genellikle başlık, paragraf, buton gibi içerik elemanları için kullanılır. **One-shot** — bir kez tetiklenir, geri scroll'da tekrar oynamaz.
+
+**Bağımlılıklar:** GSAP, ScrollTrigger, Lenis (`window.__lenis` beklenir)
+
+### Sabit değerler
+
+| Parametre | Değer |
+|---|---|
+| `distance` | `52px` (kayma mesafesi) |
+| `duration` | `0.9s` |
+| `ease` | `power4.out` |
+| `start` | `top 88%` (varsayılan) |
+
+### Yönler
+
+| Değer | Davranış |
+|---|---|
+| `bottom` (varsayılan) | Aşağıdan yukarı kayarak gelir (`y: 52 → 0`) |
+| `top` | Yukarıdan aşağı kayarak gelir (`y: -52 → 0`) |
+| `left` | Soldan sağa kayarak gelir (`x: -52 → 0`) |
+| `right` | Sağdan sola kayarak gelir (`x: 52 → 0`) |
+
+### Data Attribute'lar
+
+| Attribute | Zorunlu | Varsayılan | Açıklama |
+|---|---|---|---|
+| `data-entrance` | **Evet** | `bottom` | Yön: `left`, `right`, `top`, `bottom`. |
+| `data-entrance-delay` | Hayır | `0` | Saniye cinsinden gecikme. Birden fazla elementi sıralı göstermek için kullanılır. |
+| `data-entrance-start` | Hayır | `"top 88%"` | ScrollTrigger start noktası. |
+| `data-entrance-trigger` | Hayır | `"scroll"` | `"load"` yapılırsa scroll beklemeden sayfa yüklenir yüklenmez tetiklenir. |
+
+### Örnekler
+
+```html
+<!-- En basit kullanım — alttan gelir -->
+<p data-entrance="bottom">Bu metin alttan gelir.</p>
+
+<!-- Soldan gelen başlık -->
+<h2 data-entrance="left">Başlık</h2>
+
+<!-- Sıralı görünüm — delay ile staggered effect -->
+<h2 data-entrance="bottom">Başlık (önce)</h2>
+<p data-entrance="bottom" data-entrance-delay="0.15">Açıklama (sonra)</p>
+<a data-entrance="bottom" data-entrance-delay="0.3">Buton (en son)</a>
+
+<!-- Sayfa yüklenince hemen oyna (scroll bekleme) -->
+<h1 data-entrance="bottom" data-entrance-trigger="load">Hero başlığı</h1>
+
+<!-- Daha geç tetikleme -->
+<div data-entrance="right" data-entrance-start="top 70%">İçerik</div>
+```
+
+### Performans
+
+- `force3D: true` ile GPU'da render edilir.
+- `will-change: transform, opacity` animasyon süresince aktif, bittikten sonra `auto`'ya alınır (memory leak yok).
+- Animasyon bittikten sonra `clearProps` ile inline transform style'lar temizlenir → CSS hover/transition'larla çakışmaz.
+- `once: true` → ScrollTrigger bir kez tetiklenip kendini siler. Performans için ideal.
+
+---
+
 ## Yükleme Sırası
 
 ```html
@@ -239,3 +303,4 @@ Her element kendi bağımsız ScrollTrigger'ına sahiptir — aynı anda birden 
 | ScrollScale | `[data-scroll-scale]` | Scrub (sabit) | Evet |
 | FillText | `.fill-text` | Scrub (sabit) | Hayır |
 | ImgReveal | `[data-img-reveal]` | Scrub (sabit) | Hayır |
+| Entrance | `[data-entrance]` | One-shot (scroll veya load) | Evet |
