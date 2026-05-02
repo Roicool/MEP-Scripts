@@ -47,12 +47,16 @@
         });
 
         if (overlay) {
-          tl.to(overlay, {
-            opacity:  0,
-            force3D:  true,
-            ease:     'power3.in',
-            duration: 0.1,
-          }, 0);
+          gsap.to(overlay, {
+            opacity: 0,
+            ease:    'power2.in',
+            scrollTrigger: {
+              trigger: g,
+              start:   'center center',
+              end:     'center center+=120',
+              scrub:   true,
+            },
+          });
         }
 
         if (content) {
