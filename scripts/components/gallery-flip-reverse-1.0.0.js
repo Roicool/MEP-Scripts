@@ -13,7 +13,7 @@
 
     var s = document.createElement('style');
     s.textContent = [
-      '.gf__content{',
+      '#overlay{',
       'backdrop-filter:blur(18px) brightness(0.75);',
       '-webkit-backdrop-filter:blur(18px) brightness(0.75);',
       'background:rgba(0,0,0,0.12);}',
@@ -43,6 +43,7 @@
         });
 
         var content = g.querySelector('.gf__content');
+        var overlay = document.querySelector('#overlay');
 
         var tl = gsap.timeline({
           scrollTrigger: {
@@ -54,14 +55,18 @@
           },
         });
 
-        if (content) {
-          tl.to(content, {
-            opacity:    0,
-            scale:      0.82,
-            filter:     'blur(14px)',
-            force3D:    true,
-            ease:       'power3.in',
-            duration:   0.1,
+        var fadeTargets = [];
+        if (content) fadeTargets.push(content);
+        if (overlay) fadeTargets.push(overlay);
+
+        if (fadeTargets.length) {
+          tl.to(fadeTargets, {
+            opacity:  0,
+            scale:    0.82,
+            filter:   'blur(14px)',
+            force3D:  true,
+            ease:     'power3.in',
+            duration: 0.1,
           }, 0);
         }
 
@@ -70,6 +75,7 @@
         return function () {
           gsap.set(items, { clearProps: 'all' });
           if (content) gsap.set(content, { clearProps: 'all' });
+          if (overlay) gsap.set(overlay, { clearProps: 'all' });
         };
       });
     }
