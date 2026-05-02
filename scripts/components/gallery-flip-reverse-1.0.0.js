@@ -43,6 +43,15 @@
           },
         });
 
+        var overlay = document.querySelector('#overlay');
+        if (overlay) {
+          tl.to(overlay, {
+            opacity:  0,
+            ease:     'none',
+            duration: 0.15,
+          }, 0);
+        }
+
         if (content) {
           tl.to(content, {
             opacity:  0,
