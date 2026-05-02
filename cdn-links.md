@@ -77,4 +77,5 @@ Base: `https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/`
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/extras/page-transition-barba-1.0.0.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/extras/page-transition-overlay-1.0.0.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/extras/blog-utils-1.0.0.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/extras/cms-pagination-1.0.0.js"></script>
 ```
