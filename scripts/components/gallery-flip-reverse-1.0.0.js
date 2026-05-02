@@ -32,20 +32,34 @@
           ease: 'expoScale(5, 1)',
         });
 
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: g,
-              start:   'center center',
-              end:     '+=100%',
-              scrub:   true,
-              pin:     g.parentNode,
-            },
-          })
-          .add(flip);
+        var content = g.querySelector('.gf__content');
+
+        var tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: g,
+            start:   'center center',
+            end:     '+=100%',
+            scrub:   true,
+            pin:     g.parentNode,
+          },
+        });
+
+        if (content) {
+          tl.to(content, {
+            opacity:    0,
+            y:          -28,
+            scale:      0.96,
+            force3D:    true,
+            ease:       'power2.in',
+            duration:   0.18,
+          }, 0);
+        }
+
+        tl.add(flip, 0);
 
         return function () {
           gsap.set(items, { clearProps: 'all' });
+          if (content) gsap.set(content, { clearProps: 'all' });
         };
       });
     }
