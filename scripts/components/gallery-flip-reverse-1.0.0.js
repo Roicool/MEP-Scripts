@@ -10,6 +10,16 @@
       return;
     }
     gsap.registerPlugin(Flip);
+
+    var s = document.createElement('style');
+    s.textContent = [
+      '.gf__content{',
+      'backdrop-filter:blur(18px) brightness(0.75);',
+      '-webkit-backdrop-filter:blur(18px) brightness(0.75);',
+      'background:rgba(0,0,0,0.12);}',
+    ].join('');
+    document.head.appendChild(s);
+
     var flipCtx;
     function createTween() {
       var g = document.querySelector('#gallery-8');
