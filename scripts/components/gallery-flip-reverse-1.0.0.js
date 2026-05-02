@@ -34,9 +34,6 @@
         });
 
         var content = g.querySelector('.gf__content');
-        var overlay = document.querySelector('#overlay');
-
-        if (overlay) gsap.set(overlay, { opacity: 1 });
 
         var tl = gsap.timeline({
           scrollTrigger: {
@@ -47,14 +44,6 @@
             pin:     g.parentNode,
           },
         });
-
-        if (overlay) {
-          tl.to(overlay, {
-            opacity:  0,
-            ease:     'power2.in',
-            duration: 0.25,
-          }, 0);
-        }
 
         if (content) {
           tl.to(content, {
@@ -72,11 +61,25 @@
         return function () {
           gsap.set(items, { clearProps: 'all' });
           if (content) gsap.set(content, { clearProps: 'all' });
-          if (overlay) gsap.set(overlay, { clearProps: 'all' });
         };
       });
     }
     createTween();
+
+    /* Overlay blur fade — Flip context'inden tamamen bağımsız */
+    var overlay = document.querySelector('#overlay');
+    if (overlay) {
+      overlay.style.opacity = '1';
+      ScrollTrigger.create({
+        trigger: '#gallery-8',
+        start:   'top 90%',
+        end:     'top 30%',
+        scrub:   true,
+        onUpdate: function (self) {
+          overlay.style.opacity = String(1 - self.progress);
+        },
+      });
+    }
     var t;
     window.addEventListener('resize', function () {
       clearTimeout(t);
