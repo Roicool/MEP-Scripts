@@ -8,7 +8,6 @@
       console.warn('ImgReveal: GSAP veya ScrollTrigger bulunamadı.');
       return;
     }
-    gsap.registerPlugin(ScrollTrigger);
 
     var targets = document.querySelectorAll('[data-img-reveal]');
     if (!targets.length) return;
@@ -32,8 +31,6 @@
         }
       );
     });
-
-    ScrollTrigger.refresh();
   }
 
   if (document.readyState === 'complete') {
