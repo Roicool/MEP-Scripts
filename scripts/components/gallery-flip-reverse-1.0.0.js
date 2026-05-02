@@ -47,11 +47,11 @@
         if (content) {
           tl.to(content, {
             opacity:    0,
-            y:          -28,
-            scale:      0.96,
+            scale:      0.82,
+            filter:     'blur(14px)',
             force3D:    true,
-            ease:       'power2.in',
-            duration:   0.18,
+            ease:       'power3.in',
+            duration:   0.1,
           }, 0);
         }
 
