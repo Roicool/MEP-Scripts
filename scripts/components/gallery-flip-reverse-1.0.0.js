@@ -12,11 +12,14 @@
     gsap.registerPlugin(Flip);
 
     var flipCtx;
+    var overlayEl = document.querySelector('#overlay');
+
     function createTween() {
       var g = document.querySelector('#gallery-8');
       if (!g) return;
       if (flipCtx) flipCtx.revert();
       g.classList.remove('gallery--final');
+
       flipCtx = gsap.context(function () {
         var items = g.querySelectorAll('.gallery__item');
 
@@ -35,9 +38,6 @@
         });
 
         var content = g.querySelector('.gf__content');
-        var overlay = document.querySelector('#overlay');
-
-        if (overlay) gsap.set(overlay, { opacity: 1 });
 
         var tl = gsap.timeline({
           scrollTrigger: {
@@ -48,10 +48,6 @@
             pin:     g.parentNode,
           },
         });
-
-        if (overlay) {
-          tl.to(overlay, { opacity: 0, ease: 'power2.in', duration: 0.2 }, 0);
-        }
 
         if (content) {
           tl.to(content, {
@@ -69,9 +65,31 @@
         return function () {
           gsap.set(items, { clearProps: 'all' });
           if (content) gsap.set(content, { clearProps: 'all' });
-          if (overlay) gsap.set(overlay, { clearProps: 'all' });
         };
       });
+    }
+
+    createTween();
+
+    /* Overlay blur fade — context dışında, pinnedContainer ile */
+    if (overlayEl) {
+      var g2 = document.querySelector('#gallery-8');
+      if (g2) {
+        gsap.set(overlayEl, { opacity: 1 });
+        gsap.to(overlayEl, {
+          opacity: 0,
+          ease:    'power2.in',
+          scrollTrigger: {
+            trigger:          g2,
+            start:            'center center',
+            end:              'center center+=200',
+            scrub:            true,
+            pinnedContainer:  g2.parentNode,
+          },
+        });
+      }
+    }
+
     var t;
     window.addEventListener('resize', function () {
       clearTimeout(t);
