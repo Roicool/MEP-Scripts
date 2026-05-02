@@ -49,13 +49,13 @@
     var zoomTl = gsap.timeline({ paused: true });
     zoomTl
       .to(imagesWrap,
-        { z: -700, duration: 0.8, ease: 'power2.inOut', force3D: true },
+        { z: -700, duration: 0.6, ease: 'sine.out', force3D: true },
         0)
       .to(copyInner,
-        { opacity: 0, duration: 0.4, ease: 'power2.inOut' },
+        { opacity: 0, duration: 0.3, ease: 'power2.out' },
         0)
       .to(copyInner,
-        { z: -100, duration: 0.8, ease: 'power2.inOut', force3D: true },
+        { z: -100, duration: 0.6, ease: 'sine.out', force3D: true },
         0);
 
     ScrollTrigger.create({
@@ -71,7 +71,7 @@
     riseTl
       .fromTo(imgPics,
         { yPercent: 0 },
-        { yPercent: -100, ease: 'none', duration: 0.5, overwrite: 'auto', force3D: true },
+        { yPercent: -100, ease: 'sine.in', duration: 0.5, overwrite: 'auto', force3D: true },
         0)
       .fromTo(imgInners,
         { y: 0 },
