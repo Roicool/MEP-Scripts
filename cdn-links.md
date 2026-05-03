@@ -32,7 +32,7 @@ Base: `https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/`
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/hero-1.0.0.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/fsc-1.0.0.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/flair-cta-1.0.0.js"></script>
-<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/vex-1.0.0.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/vex-1.0.1.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/sticky-tabs-1.0.0.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/stickygrid-1.0.0.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/ic-1.0.0.js"></script>
