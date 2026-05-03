@@ -42,12 +42,14 @@ Base: `https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/`
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/polaroid-drag-1.0.0.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/scatter-hero-1.0.0.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/outsized-value-1.0.0.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/social-proof-1.0.0.js"></script>
 ```
 
-### scatter-hero CSS (link tag olarak ekle)
+### Component CSS (link tag olarak ekle)
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/scatter-hero-1.0.0.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/social-proof-1.0.0.css">
 ```
 
 ---
