@@ -30,115 +30,6 @@
   var SCRUB      = 1;
   var SCALE_FROM = 0.72;
 
-  var FLUID_PAD = [
-    'clamp(3rem,',
-    '((3 - ((5 - 3) / (var(--layout--fluid-max) - var(--layout--fluid-min)))',
-    ' * var(--layout--fluid-min))) * 1rem',
-    ' + ((5 - 3) / (var(--layout--fluid-max) - var(--layout--fluid-min)))',
-    ' * 100vw, 5rem)',
-  ].join('');
-
-  var STYLES = [
-    /* Section: tam viewport yüksekliği, padding ile wrap'ı sınırlar */
-    /* align-items:stretch → wrap height:100% doğru çalışır        */
-    '.section-vex{',
-    'width:100%;height:100vh;height:100svh;',
-    'display:flex;align-items:stretch;justify-content:center;',
-    'padding:2rem ' + FLUID_PAD + ';',
-    'box-sizing:border-box;}',
-
-    /* Wrap: padding'den kalan alanı tam doldurur, scale eder */
-    /* clip-path: overflow+border-radius composited child'ları doğru clip etmez (Safari/Chrome bug) */
-    '.vex__wrap{',
-    'position:relative;',
-    'width:100%;height:100%;',
-    'border-radius:1.5rem;',
-    'overflow:hidden;',
-    'clip-path:inset(0 round 1.5rem);',
-    'will-change:transform;',
-    'transform-origin:center center;}',
-
-    /* Media: wrap'ı tamamen kaplar */
-    '.vex__media{',
-    'position:absolute;inset:0;z-index:0;',
-    'overflow:hidden;isolation:isolate;}',
-    '.vex__media>video,.vex__media>img{',
-    'position:absolute;inset:0;width:100%;height:100%;',
-    'object-fit:cover;display:block;}',
-
-    /* Blur: media içinde */
-    '.vex__blur{',
-    'position:absolute;inset:0;z-index:1;',
-    'backdrop-filter:blur(22px) brightness(0.52);',
-    '-webkit-backdrop-filter:blur(22px) brightness(0.52);}',
-
-    /* Headline: wrap ortasında */
-    '.vex__headline{',
-    'position:absolute;inset:0;z-index:2;',
-    'display:flex;align-items:center;justify-content:center;',
-    'text-align:center;padding:2rem 10%;',
-    'pointer-events:none;}',
-
-    /* Grid: wrap'ı tamamen kaplar */
-    '.vex__grid{',
-    'position:absolute;inset:0;z-index:3;',
-    'display:grid;grid-template-columns:1fr 1fr;',
-    'pointer-events:none;}',
-    '.vex__grid.is-interactive{pointer-events:auto;}',
-
-    /* Sol kolon */
-    '.vex__left{',
-    'overflow-y:auto;',
-    'display:flex;flex-direction:column;justify-content:center;',
-    '--vex-pad:' + FLUID_PAD + ';padding:var(--vex-pad);}',
-
-    /* Sağ kolon */
-    '.vex__right{position:relative;overflow:hidden;}',
-
-    /* Sağ overlay: media üstünde kalıcı karartma */
-    '.vex__right-overlay{',
-    'position:absolute;inset:0;z-index:0;',
-    'background:rgba(0,0,0,0.25);pointer-events:none;}',
-
-    /* Per-tab resimler: padding + radius ile card görünümü */
-    '.vex__right-img{',
-    'position:absolute;inset:1.5rem;z-index:1;',
-    'border-radius:0.75rem;overflow:hidden;',
-    'display:flex;align-items:center;justify-content:center;',
-    'opacity:0;transition:opacity 0.45s ease;}',
-    '.vex__right-img.is-active{opacity:1;}',
-    '.vex__right-img>img,.vex__right-img>video{',
-    'width:100%;height:auto;max-height:100%;',
-    'aspect-ratio:656/494;',
-    'border-radius:0.75rem;',
-    'object-fit:cover;display:block;}',
-
-    /* Paneller: fade + slide up */
-    '.vex__panels{position:relative;}',
-    '.vex__panel{',
-    'opacity:0;transform:translateY(14px);',
-    'transition:opacity 0.32s ease,transform 0.32s ease;',
-    'pointer-events:none;',
-    'position:absolute;top:0;left:0;width:100%;}',
-    '.vex__panel.is-active{',
-    'opacity:1;transform:translateY(0);',
-    'pointer-events:auto;position:relative;}',
-
-    /* Mobil: grid stack, sağ üste */
-    '@media(max-width:767px){',
-    '.section-vex{padding:1.25rem;}',
-    '.vex__grid{grid-template-columns:1fr;grid-template-rows:1fr 1fr;}',
-    '.vex__right{order:-1;}',
-    '.vex__left{--vex-pad:1.25rem;}',
-    '}',
-  ].join('');
-
-  function injectCSS() {
-    var s = document.createElement('style');
-    s.textContent = STYLES;
-    document.head.appendChild(s);
-  }
-
   /* ── Tab + sağ resim geçişi ───────────────────────────── */
   function initTabs(section) {
     var tabs      = section.querySelectorAll('.vex__tab');
@@ -181,13 +72,10 @@
     var grid     = section.querySelector('.vex__grid');
     var left     = grid ? grid.querySelector('.vex__left') : null;
 
-    /* ── Başlangıç durumu ── */
-    if (wrap)     gsap.set(wrap,     { scale: SCALE_FROM, force3D: true });
-    if (media)    gsap.set(media,    { top: 0, left: 0, right: 0, bottom: 0, borderRadius: 0 });
-    if (blur)     gsap.set(blur,     { opacity: 0 });
-    if (headline) gsap.set(headline, { opacity: 0, y: 40 });
-    if (grid)     gsap.set(grid,     { opacity: 0 });
-    if (left)     gsap.set(left,     { x: -56, opacity: 0 });
+    /* ── Başlangıç durumu ──
+     * scale/opacity/transform başlangıç değerleri CSS'de tanımlı (CLS fix).
+     * media default pozisyonu CSS inset:0 ile sağlanıyor. */
+    if (media) gsap.set(media, { top: 0, left: 0, right: 0, bottom: 0, borderRadius: 0 });
 
     /* ── Scale: section viewport'a girerken (pin'den bağımsız) ──
      * FSC ile aynı pattern: ayrı ScrollTrigger, section alttan girerken açılır.
@@ -296,6 +184,5 @@
     }, 100);
   }
 
-  injectCSS();
   window.addEventListener('load', waitAndInit);
 })();
