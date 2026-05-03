@@ -16,12 +16,12 @@ Base: `https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/`
 ## Animations
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/entrance-1.0.0.js"></script>
-<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/parallax-1.0.0.js"></script>
-<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/img-reveal-1.0.0.js"></script>
-<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/scrollcolor-1.0.0.js"></script>
-<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/scrollscale-1.0.0.js"></script>
-<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/fill-text-1.0.0.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/entrance-1.0.1.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/parallax-1.0.1.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/img-reveal-1.0.1.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/scrollcolor-1.0.1.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/scrollscale-1.0.1.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/animations/fill-text-1.0.1.js"></script>
 ```
 
 ---
