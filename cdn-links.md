@@ -41,6 +41,7 @@ Base: `https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/`
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/splitcards-1.0.2.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/polaroid-drag-1.0.0.js"></script>
 <script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/scatter-hero-1.0.0.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/outsized-value-1.0.0.js"></script>
 ```
 
 ### scatter-hero CSS (link tag olarak ekle)
