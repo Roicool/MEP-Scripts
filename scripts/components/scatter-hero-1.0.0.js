@@ -67,21 +67,31 @@
     });
 
     // 3. Rise (scrub): padding + 500px sonra tetiklenir
-    var riseTl = gsap.timeline();
-    riseTl
-      .fromTo(imgPics,
-        { yPercent: 0 },
-        { yPercent: -100, ease: 'sine.in', duration: 0.5, overwrite: 'auto', force3D: true },
-        0)
-      .fromTo(imgInners,
-        { y: 0 },
-        { y: -(vh * 1.25), ease: 'none', duration: 1, overwrite: 'auto', force3D: true },
-        0);
+    // Her img-inner için farklı parallax çarpanı (1.0x → 1.22x).
+    // Hepsi en az vh*1.25 gider (CSS overlap kalibrasyonu), bazıları daha
+    // uzağa → fotoğraflar dalga dalga, farklı hızlarda çıkar.
+    var Y_VARIANTS = [1.00, 1.15, 1.05, 1.20, 1.02, 1.12, 1.08, 1.18, 1.04, 1.22, 1.06];
 
+    var riseTl = gsap.timeline();
+    riseTl.fromTo(imgPics,
+      { yPercent: 0 },
+      { yPercent: -100, ease: 'sine.in', duration: 0.5, overwrite: 'auto', force3D: true },
+      0);
+
+    Array.prototype.forEach.call(imgInners, function (el, i) {
+      var v = Y_VARIANTS[i % Y_VARIANTS.length];
+      riseTl.fromTo(el,
+        { y: 0 },
+        { y: -(vh * 1.25 * v), ease: 'none', duration: 1, overwrite: 'auto', force3D: true },
+        0);
+    });
+
+    // Rise pin ile AYNI noktada bitsin → pin bittiğinde section doğal scroll'a
+    // geçerken animasyon hâlâ ilerliyor olmasın (çift hareket = ani hızlanma).
     ScrollTrigger.create({
       trigger: section,
       start: 'top+=' + (pad + 500) + ' top',
-      end: '+=' + (vh * 1.5),
+      end: '+=' + (vh * 1.5 - 500),
       scrub: true,
       animation: riseTl
     });
