@@ -26,7 +26,7 @@
       }, 200);
     };
 
-    // Finsweet CMS Filter — filtre/pagination sonrası resize
+    // Finsweet CMS Filter — filtre sonrası resize
     window.fsAttributes = window.fsAttributes || [];
     window.fsAttributes.push(['cmsfilter', function (filterInstances) {
       filterInstances.forEach(function (instance) {
@@ -35,6 +35,28 @@
         });
       });
     }]);
+
+    // Finsweet CMS Load — pagination / load-more / infinite scroll sonrası resize
+    window.fsAttributes.push(['cmsload', function (loadInstances) {
+      loadInstances.forEach(function (instance) {
+        instance.on('renderitems', function () {
+          window.__lenisRefresh();
+        });
+      });
+    }]);
+
+    // Emniyet ağı: body yüksekliği değişirse (her tür dinamik içerik) refresh et
+    if (typeof ResizeObserver !== 'undefined') {
+      var lastHeight = document.body.scrollHeight;
+      var ro = new ResizeObserver(function () {
+        var h = document.body.scrollHeight;
+        if (h !== lastHeight) {
+          lastHeight = h;
+          window.__lenisRefresh();
+        }
+      });
+      ro.observe(document.body);
+    }
 
     setTimeout(function () { ScrollTrigger.refresh(); }, 500);
     setTimeout(function () { lenis.resize(); ScrollTrigger.refresh(); }, 1500);
