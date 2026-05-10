@@ -1,6 +1,6 @@
 /**
  * Lenis 1.0.1 — smooth scroll, GSAP ticker entegrasyonu.
- * Finsweet CMS Filter renderitems + MutationObserver ile otomatik resize.
+ * Finsweet CMS Filter renderitems ile otomatik resize.
  */
 (function () {
   function run() {
@@ -35,17 +35,6 @@
         });
       });
     }]);
-
-    // Fallback: diğer dinamik içerik değişiklikleri için MutationObserver
-    var mutationTimer;
-    var observer = new MutationObserver(function () {
-      clearTimeout(mutationTimer);
-      mutationTimer = setTimeout(function () {
-        lenis.resize();
-        ScrollTrigger.refresh();
-      }, 300);
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
 
     setTimeout(function () { ScrollTrigger.refresh(); }, 500);
     setTimeout(function () { lenis.resize(); ScrollTrigger.refresh(); }, 1500);
