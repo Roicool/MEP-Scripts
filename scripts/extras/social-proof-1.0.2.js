@@ -84,16 +84,6 @@
     /* CMS list gizle */
     list.style.display = 'none';
 
-    /* ── Mobil: tab scroll ───────────────────────────────── */
-    if (window.innerWidth < BP_MOB) {
-      tabsWrap.style.overflowX     = 'auto';
-      tabsWrap.style.scrollbarWidth = 'none';
-      tabsWrap.style.msOverflowStyle = 'none';
-      var mobStyle = document.createElement('style');
-      mobStyle.textContent = '.sp__tabs::-webkit-scrollbar{display:none}';
-      document.head.appendChild(mobStyle);
-    }
-
     inner.appendChild(tabsWrap);
     inner.appendChild(contentTrack);
     section.appendChild(bgTrack);
@@ -152,11 +142,6 @@
       tabs.forEach(function (t, i) {
         t.classList.toggle('is-active', i === index);
       });
-
-      /* Mobil: aktif tab'ı ortala */
-      if (window.innerWidth < BP_MOB) {
-        tabs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
 
       /* Fill sıfırla */
       killFill();
