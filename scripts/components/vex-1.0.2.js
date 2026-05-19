@@ -1,4 +1,3 @@
-<script>
 /**
  * VEX 1.0.2 — Video Expand Section
  *
@@ -421,4 +420,3 @@
     }
   });
 })();
-</script>
