@@ -1,3 +1,8 @@
+<script>
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+
+<script>
 /**
  * Lenis 1.0.1 — smooth scroll, GSAP ticker entegrasyonu.
  * Finsweet CMS Filter renderitems ile otomatik resize.
@@ -68,3 +73,4 @@
     window.addEventListener('load', run);
   }
 })();
+</script>
