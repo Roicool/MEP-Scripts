@@ -1,0 +1,18 @@
+Old Path,Redirect to Path
+/about.html,/about-us
+/contact.html,/contact-us
+/faq.html,/faq
+/blog.html,/blog
+/image-gallery.html,/projects
+/video-gallery.html,/projects
+/solution-partners.html,/about-us
+/services.html,/services/eifs-stucco-decorative-mouldings
+/services/5/stone.html,/services/stone-masonry-systems
+/services/6/moulding-design.html,/services/eifs-stucco-decorative-mouldings
+/services/7/stucco-services.html,/services/eifs-stucco-decorative-mouldings
+/blog/1/moulding-design.html,/services/eifs-stucco-decorative-mouldings
+/blog/2/why-stucco-for-cladding.html,/blog/why-choose-eifs-over-siding
+/image-gallery-details/30/4-eversfield.html,/projects
+/image-gallery-details/31/14-abbywood.html,/projects
+/image-gallery-details/48/deneme-galeri.html,/projects
+/image-gallery-details/49/brampton-1.html,/projects
