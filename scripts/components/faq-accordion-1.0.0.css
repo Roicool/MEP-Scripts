@@ -1,0 +1,136 @@
+/*!
+ * faq-accordion-1.0.0.css — MEP
+ * accordion.js (data-attribute'lu SSS akordiyonu) için stil katmanı.
+ * marveltour/css/components/accordion.css v1.1.0'dan revize:
+ *   - Renkler MEP paletine çevrildi (wine/neutral → espresso/turquoise/brown)
+ *   - "faq" opt-in katmanı kaldırıldı — görünüm varsayılan, iptali data-accordion="bare"
+ *   - Tüm değerler root'taki 5 token'a bağlandı (mobil = tek satır override)
+ *   - font-size kuralları yok — tipografi Webflow Designer'ın
+ *   - will-change kaldırıldı (height compositable değil, faydası yoktu)
+ *
+ * NOT: repo'daki scripts/extras/accordion-1.0.0.js BAŞKA bir bileşendir
+ *      (.acs — scroll pinli akordeon). Bu dosya onunla ilgili değildir.
+ *
+ * DOM:
+ *   <div data-accordion>
+ *     <div data-accordion-item>            ← data-accordion-open = açık başlar
+ *       <button data-accordion-trigger>
+ *         Soru
+ *         <svg data-accordion-icon>…</svg>
+ *       </button>
+ *       <div data-accordion-panel>          ← yüksekliği GSAP sürer
+ *         <div data-accordion-content>Cevap…</div>
+ *       </div>
+ *     </div>
+ *   </div>
+ */
+
+/* ── Tokenlar ────────────────────────────────────────────────────
+   Webflow değişkenine bağlamak istersen: --acc-ink: var(--color-text--main);
+   ─────────────────────────────────────────────────────────────── */
+[data-accordion] {
+  --acc-ink:    oklch(0.1942 0.03 56.26); /* espresso — soru metni     */
+  --acc-accent: #15adaa;                  /* turquoise — hover / açık  */
+  --acc-line:   #bfa799;                  /* brown — hairline ayraç    */
+  --acc-pad:    1.5rem;                   /* satır dikey nefesi        */
+  --acc-speed:  0.3s;
+}
+
+/* ── Ayraçlar — kutu/kart/gölge yok, sadece hairline ─────────────── */
+[data-accordion-item] {
+  border-bottom: 1px solid color-mix(in oklab, var(--acc-line) 55%, transparent);
+}
+
+[data-accordion-item]:first-child {
+  border-top: 1px solid color-mix(in oklab, var(--acc-line) 55%, transparent);
+}
+
+/* ── Trigger — native button görünümü sıfırlanır, tüm satır tıklanır ── */
+[data-accordion-trigger] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding-block: var(--acc-pad);
+  border: 0;
+  background: none;
+  font: inherit;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  color: var(--acc-ink);
+  transition: color var(--acc-speed) ease;
+}
+
+[data-accordion-trigger]:focus-visible {
+  outline: 2px solid var(--acc-accent);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) {
+  [data-accordion-trigger]:hover { color: var(--acc-accent); }
+}
+
+[data-accordion-item].is-open [data-accordion-trigger] { color: var(--acc-accent); }
+
+/* ── İkon — currentColor'ı miras alır, ayrı renk kuralı gerekmez ──── */
+[data-accordion-icon] {
+  flex: 0 0 auto;
+  width: 1em;
+  height: 1em;
+  opacity: 0.45;
+  transition: transform var(--acc-speed) cubic-bezier(0.16, 1, 0.3, 1),
+              opacity   var(--acc-speed) ease;
+}
+
+[data-accordion-item].is-open [data-accordion-icon] {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+/* ── Panel — .is-enhanced'i JS basar. JS/GSAP yokken paneller doğal
+      yükseklikte kalır: tüm cevaplar görünür (erişilebilir fallback). ── */
+[data-accordion].is-enhanced [data-accordion-panel] {
+  height: 0;
+  overflow: hidden; /* height tween'inin sahibi GSAP — CSS transition YOK */
+}
+
+/* ── Cevap — okuma genişliği sınırlı, mürekkep bir ton geri çekilir ── */
+[data-accordion-content] {
+  padding-bottom: var(--acc-pad);
+  max-width: 65ch;
+  line-height: 1.65;
+  color: color-mix(in oklab, var(--acc-ink) 72%, transparent);
+}
+
+[data-accordion]:not(.is-enhanced) [data-accordion-content] {
+  padding-top: 0.5rem;
+}
+
+/* ── Koyu zeminli section'lar: <div data-accordion data-accordion-theme="dark"> ── */
+[data-accordion][data-accordion-theme="dark"] {
+  --acc-ink:  #f9ecd6; /* light */
+  --acc-line: #ece8e0; /* neutral */
+}
+
+/* ── Görünümü tamamen Designer'a bırak: <div data-accordion="bare"> ──
+      Davranışsal kurallar (panel height, ikon dönüşü) korunur.        ── */
+[data-accordion="bare"] [data-accordion-item] { border: 0; }
+
+[data-accordion="bare"] [data-accordion-trigger],
+[data-accordion="bare"] [data-accordion-content] {
+  padding-block: 0;
+  max-width: none;
+  color: inherit;
+}
+
+/* ── Mobil — tek token, tüm boşluklar birlikte küçülür ───────────── */
+@media (max-width: 47.9375em) {
+  [data-accordion] { --acc-pad: 1.125rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-accordion-trigger],
+  [data-accordion-icon] { transition: none; }
+}
