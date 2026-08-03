@@ -1,0 +1,154 @@
+/*!
+ * faq-accordion-1.0.1.css — MEP
+ * accordion.js (data-attribute'lu SSS akordiyonu) için stil katmanı.
+ *
+ * 1.0.0 → 1.0.1 (boşluk revizyonu)
+ *   - Sabit rem yerine MEP fluid ölçeği (vex ile aynı --layout--fluid-min/max
+ *     formülü) — mobil media query'ye gerek kalmadı, silindi
+ *   - Soru satırı ile cevabın alt nefesi ayrıştırıldı (--acc-row / --acc-answer)
+ *   - Webflow rich text'in <p> margin'leri sıfırlanıyor: asıl bozuk boşlukların
+ *     kaynağı buydu (ayrıca margin collapse panel kapalıyken dışarı sızıyordu)
+ *   - İkon 1em yerine kendi token'ında (font-size'a bağlı değil)
+ *   - data-accordion="bare" artık selector değil token override
+ *
+ * NOT: repo'daki scripts/extras/accordion-1.0.0.js BAŞKA bir bileşendir
+ *      (.acs — scroll pinli akordeon). Bu dosya onunla ilgili değildir.
+ *
+ * DOM:
+ *   <div data-accordion>
+ *     <div data-accordion-item>            ← data-accordion-open = açık başlar
+ *       <button data-accordion-trigger>
+ *         Soru
+ *         <svg data-accordion-icon>…</svg>
+ *       </button>
+ *       <div data-accordion-panel>          ← yüksekliği GSAP sürer
+ *         <div data-accordion-content>Cevap…</div>
+ *       </div>
+ *     </div>
+ *   </div>
+ */
+
+/* ── Tokenlar ────────────────────────────────────────────────────
+   Boşluklar --layout--fluid-min/max arasında akar (MEP fluid ölçeği).
+   Webflow değişkenine bağlamak istersen: --acc-ink: var(--color-text--main);
+   ─────────────────────────────────────────────────────────────── */
+[data-accordion] {
+  --acc-ink:     oklch(0.1942 0.03 56.26); /* espresso — soru metni    */
+  --acc-accent:  #15adaa;                  /* turquoise — hover / açık */
+  --acc-line:    #bfa799;                  /* brown — hairline ayraç   */
+  --acc-icon:    1.25rem;
+  --acc-measure: 62ch;                     /* cevabın okuma genişliği  */
+  --acc-inset:   0rem;                     /* yatay iç boşluk          */
+  --acc-speed:   0.3s;
+
+  /* soru satırının dikey nefesi — 1.25rem → 1.875rem */
+  --acc-row: clamp(1.25rem,
+    (1.25 - (0.625 / (var(--layout--fluid-max, 1440) - var(--layout--fluid-min, 480)))
+      * var(--layout--fluid-min, 480)) * 1rem
+    + (0.625 / (var(--layout--fluid-max, 1440) - var(--layout--fluid-min, 480))) * 100vw,
+    1.875rem);
+
+  /* cevabın alt nefesi — 1.75rem → 2.5rem */
+  --acc-answer: clamp(1.75rem,
+    (1.75 - (0.75 / (var(--layout--fluid-max, 1440) - var(--layout--fluid-min, 480)))
+      * var(--layout--fluid-min, 480)) * 1rem
+    + (0.75 / (var(--layout--fluid-max, 1440) - var(--layout--fluid-min, 480))) * 100vw,
+    2.5rem);
+}
+
+/* ── Ayraçlar — kutu/kart/gölge yok, sadece hairline ─────────────── */
+[data-accordion-item] {
+  border-bottom: 1px solid color-mix(in oklab, var(--acc-line) 55%, transparent);
+}
+
+[data-accordion-item]:first-child {
+  border-top: 1px solid color-mix(in oklab, var(--acc-line) 55%, transparent);
+}
+
+/* ── Trigger — native button görünümü sıfırlanır, tüm satır tıklanır ── */
+[data-accordion-trigger] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  padding: var(--acc-row) var(--acc-inset);
+  border: 0;
+  background: none;
+  font: inherit;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  color: var(--acc-ink);
+  transition: color var(--acc-speed) ease;
+}
+
+[data-accordion-trigger]:focus-visible {
+  outline: 2px solid var(--acc-accent);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) {
+  [data-accordion-trigger]:hover { color: var(--acc-accent); }
+}
+
+[data-accordion-item].is-open [data-accordion-trigger] { color: var(--acc-accent); }
+
+/* ── İkon — currentColor'ı miras alır, ayrı renk kuralı gerekmez ──── */
+[data-accordion-icon] {
+  flex: 0 0 auto;
+  width: var(--acc-icon);
+  height: var(--acc-icon);
+  opacity: 0.45;
+  transition: transform var(--acc-speed) cubic-bezier(0.16, 1, 0.3, 1),
+              opacity   var(--acc-speed) ease;
+}
+
+[data-accordion-item].is-open [data-accordion-icon] {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+/* ── Panel — .is-enhanced'i JS basar. JS/GSAP yokken paneller doğal
+      yükseklikte kalır: tüm cevaplar görünür (erişilebilir fallback). ── */
+[data-accordion].is-enhanced [data-accordion-panel] {
+  height: 0;
+  overflow: hidden; /* height tween'inin sahibi GSAP — CSS transition YOK */
+}
+
+/* ── Cevap — soru satırının alt padding'i zaten ayırıyor, üstten boşluk yok ── */
+[data-accordion-content] {
+  padding: 0 var(--acc-inset) var(--acc-answer);
+  max-width: var(--acc-measure);
+  line-height: 1.65;
+  color: color-mix(in oklab, var(--acc-ink) 72%, transparent);
+}
+
+/* Webflow rich text: ilk/son çocuğun kendi margin'i boşluğu bozar —
+   kapalıyken margin collapse ile panelden dışarı da sızabilir. */
+[data-accordion-content] :first-child { margin-top: 0; }
+[data-accordion-content] :last-child  { margin-bottom: 0; }
+
+/* ── Koyu zeminli section'lar: <div data-accordion data-accordion-theme="dark"> ── */
+[data-accordion][data-accordion-theme="dark"] {
+  --acc-ink:  #f9ecd6; /* light */
+  --acc-line: #ece8e0; /* neutral */
+}
+
+/* ── Görünümü tamamen Designer'a bırak: <div data-accordion="bare"> ──
+      Davranışsal kurallar (panel height, ikon dönüşü) korunur.        ── */
+[data-accordion="bare"] {
+  --acc-row: 0rem;
+  --acc-answer: 0rem;
+  --acc-measure: none;
+}
+
+[data-accordion="bare"] [data-accordion-item] { border: 0; }
+
+[data-accordion="bare"] [data-accordion-trigger],
+[data-accordion="bare"] [data-accordion-content] { color: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-accordion-trigger],
+  [data-accordion-icon] { transition: none; }
+}
