@@ -50,7 +50,7 @@ Base: `https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/`
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/scatter-hero-1.0.0.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/social-proof-1.0.0.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/faq-accordion-1.0.2.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Roicool/MEP-Scripts@main/scripts/components/faq-accordion-1.0.3.css">
 ```
 
 > `faq-accordion-1.0.0.css`, marveltour'daki `js/components/accordion.js` ile

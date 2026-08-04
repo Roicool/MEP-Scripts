@@ -1,0 +1,179 @@
+/*!
+ * faq-accordion-1.0.3.css — MEP
+ * accordion.js (data-attribute'lu SSS akordiyonu) için stil katmanı.
+ *
+ * 1.0.2 → 1.0.3 (ayraç genişliği + satır ritmi)
+ *   Ayraçlar farklı uzunluktaydı: item'lar tam genişlik değil, içeriğe göre
+ *   daralıyordu (root Designer'da flex/grid ise align-items item'ı büzüyor).
+ *   Aynı sebep ok işaretini de metne yapıştırıyordu. Artık layout'u bileşen
+ *   sahipleniyor: root block, item'lar %100 genişlik, margin/gap sıfır —
+ *   satır aralığı yalnız --acc-row'dan geliyor, ayraçlar kesintisiz.
+ *
+ * 1.0.1 → 1.0.2 (kompakt ölçek)
+ *   Bileşen fazla iri duruyordu. Tüm dikey ölçek kısıldı:
+ *     soru satırı nefesi   1.25→1.875rem  ⇒  0.875→1.25rem
+ *     cevabın alt nefesi   1.75→2.5rem    ⇒  1.125→1.625rem
+ *     ikon                 1.25rem        ⇒  1rem
+ *     okuma genişliği      62ch           ⇒  56ch
+ *   Satır aralıkları da sıkıldı (1.3→1.25 / 1.65→1.55).
+ *   İki kapalı soru arası: 1.0.0'da sabit 3rem → şimdi 1.75–2.5rem (akışkan).
+ *
+ * TİPOGRAFİ CSS'te DEĞİL — soru/cevap punto ve font'u Webflow Designer'ın.
+ * Yine de CSS'ten kısmak istersen tek satır yeter:
+ *   [data-accordion] [data-accordion-trigger] { font-size: 1rem; }
+ *
+ * NOT: repo'daki scripts/extras/accordion-1.0.0.js BAŞKA bir bileşendir
+ *      (.acs — scroll pinli akordeon). Bu dosya onunla ilgili değildir.
+ *
+ * DOM:
+ *   <div data-accordion>
+ *     <div data-accordion-item>            ← data-accordion-open = açık başlar
+ *       <button data-accordion-trigger>
+ *         Soru
+ *         <svg data-accordion-icon>…</svg>
+ *       </button>
+ *       <div data-accordion-panel>          ← yüksekliği GSAP sürer
+ *         <div data-accordion-content>Cevap…</div>
+ *       </div>
+ *     </div>
+ *   </div>
+ */
+
+/* ── Tokenlar ────────────────────────────────────────────────────
+   Sıkı/gevşek ayarı buradan: --acc-row ve --acc-answer'daki rem'ler.
+   Boşluklar --layout--fluid-min/max arasında akar (MEP fluid ölçeği).
+   ─────────────────────────────────────────────────────────────── */
+[data-accordion] {
+  /* Layout bileşenin: Designer'da root flex/grid ise item'lar içeriğe göre
+     büzülüyor ve her ayraç farklı uzunlukta çıkıyordu. Satır aralığını
+     gap/margin değil --acc-row belirler — ayraçlar böylece kesintisiz. */
+  display: block;
+
+  --acc-ink:     oklch(0.1942 0.03 56.26); /* espresso — soru metni    */
+  --acc-accent:  #15adaa;                  /* turquoise — hover / açık */
+  --acc-line:    #bfa799;                  /* brown — hairline ayraç   */
+  --acc-icon:    1rem;
+  --acc-measure: 56ch;                     /* cevabın okuma genişliği  */
+  --acc-inset:   0rem;                     /* yatay iç boşluk          */
+  --acc-speed:   0.28s;
+
+  /* soru satırının dikey nefesi — 0.875rem → 1.25rem */
+  --acc-row: clamp(0.875rem,
+    (0.875 - (0.375 / (var(--layout--fluid-max, 1440) - var(--layout--fluid-min, 480)))
+      * var(--layout--fluid-min, 480)) * 1rem
+    + (0.375 / (var(--layout--fluid-max, 1440) - var(--layout--fluid-min, 480))) * 100vw,
+    1.25rem);
+
+  /* cevabın alt nefesi — 1.125rem → 1.625rem */
+  --acc-answer: clamp(1.125rem,
+    (1.125 - (0.5 / (var(--layout--fluid-max, 1440) - var(--layout--fluid-min, 480)))
+      * var(--layout--fluid-min, 480)) * 1rem
+    + (0.5 / (var(--layout--fluid-max, 1440) - var(--layout--fluid-min, 480))) * 100vw,
+    1.625rem);
+}
+
+/* ── Ayraçlar — kutu/kart/gölge yok, sadece hairline ─────────────── */
+[data-accordion-item] {
+  /* align-self: root'ta flex/grid kalırsa align-items'ı ezer — hepsi eşit boy */
+  width: 100%;
+  align-self: stretch;
+  margin: 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid color-mix(in oklab, var(--acc-line) 55%, transparent);
+}
+
+[data-accordion-item]:first-child {
+  border-top: 1px solid color-mix(in oklab, var(--acc-line) 55%, transparent);
+}
+
+/* ── Trigger — native button görünümü sıfırlanır, tüm satır tıklanır ── */
+[data-accordion-trigger] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--acc-row) var(--acc-inset);
+  border: 0;
+  background: none;
+  font: inherit;
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+  color: var(--acc-ink);
+  transition: color var(--acc-speed) ease;
+}
+
+[data-accordion-trigger]:focus-visible {
+  outline: 2px solid var(--acc-accent);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  [data-accordion-trigger]:hover { color: var(--acc-accent); }
+}
+
+[data-accordion-item].is-open [data-accordion-trigger] { color: var(--acc-accent); }
+
+/* ── İkon — currentColor'ı miras alır, ayrı renk kuralı gerekmez ──── */
+[data-accordion-icon] {
+  flex: 0 0 auto;
+  width: var(--acc-icon);
+  height: var(--acc-icon);
+  opacity: 0.45;
+  transition: transform var(--acc-speed) cubic-bezier(0.16, 1, 0.3, 1),
+              opacity   var(--acc-speed) ease;
+}
+
+[data-accordion-item].is-open [data-accordion-icon] {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+/* ── Panel — .is-enhanced'i JS basar. JS/GSAP yokken paneller doğal
+      yükseklikte kalır: tüm cevaplar görünür (erişilebilir fallback). ── */
+[data-accordion].is-enhanced [data-accordion-panel] {
+  height: 0;
+  overflow: hidden; /* height tween'inin sahibi GSAP — CSS transition YOK */
+}
+
+/* ── Cevap — soru satırının alt padding'i zaten ayırıyor, üstten boşluk yok ── */
+[data-accordion-content] {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0 var(--acc-inset) var(--acc-answer);
+  max-width: var(--acc-measure);
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--acc-ink) 72%, transparent);
+}
+
+/* İlk/son çocuğun kendi margin'i boşluğu bozar — kapalıyken margin
+   collapse ile panelden dışarı da sızabilir. */
+[data-accordion-content] :first-child { margin-top: 0; }
+[data-accordion-content] :last-child  { margin-bottom: 0; }
+
+/* ── Koyu zeminli section'lar: <div data-accordion data-accordion-theme="dark"> ── */
+[data-accordion][data-accordion-theme="dark"] {
+  --acc-ink:  #f9ecd6; /* light */
+  --acc-line: #ece8e0; /* neutral */
+}
+
+/* ── Görünümü tamamen Designer'a bırak: <div data-accordion="bare"> ──
+      Davranışsal kurallar (panel height, ikon dönüşü) korunur.        ── */
+[data-accordion="bare"] {
+  --acc-row: 0rem;
+  --acc-answer: 0rem;
+  --acc-measure: none;
+}
+
+[data-accordion="bare"] [data-accordion-item] { border: 0; }
+
+[data-accordion="bare"] [data-accordion-trigger],
+[data-accordion="bare"] [data-accordion-content] { color: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-accordion-trigger],
+  [data-accordion-icon] { transition: none; }
+}
